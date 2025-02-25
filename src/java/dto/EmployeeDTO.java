@@ -16,17 +16,17 @@ public class EmployeeDTO {
     private String phone;
     private String email;
     private LocalDate Date;
-     private int roleId;
+    private RoleDTO roleDTO;
      
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(String name, String phone, String email, LocalDate Date,int roleID) {
+    public EmployeeDTO(String name, String phone, String email, LocalDate Date,RoleDTO roleDTO) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.Date = Date;
-        this.roleId=roleID;
+        this.roleDTO=roleDTO;
     }
 
     public String getName() {
@@ -61,13 +61,17 @@ public class EmployeeDTO {
         this.Date = Date;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public RoleDTO getRoleDTO() {
+        return roleDTO;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRoleDTO(RoleDTO roleDTO) {
+        this.roleDTO = roleDTO;
     }
+
+   
+
+   
     
     
     

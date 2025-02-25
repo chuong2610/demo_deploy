@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dto.EmployeeDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -47,13 +48,13 @@ public class LoginController extends HttpServlet {
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
 
-                Employee e = employeeService.IsValidEmployee(username, password);
+                EmployeeDTO employeeDTO = employeeService.IsValidEmployee(username, password);
 
-                if (e != null) {
+                if (employeeDTO != null) {
                       HttpSession session = request.getSession();
-                      session.setAttribute("employee", e); 
+                      session.setAttribute("employeeDTO", employeeDTO); 
                       session.setMaxInactiveInterval(5 * 60);
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("http://localhost:8080/QuanLiNhanSu/index");
                     return;
                 } else {
                     request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");

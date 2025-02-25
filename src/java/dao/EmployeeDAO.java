@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Employee;
+import model.Role;
 import ultils.DBUltils;
 
 /**
@@ -24,17 +25,43 @@ import ultils.DBUltils;
  */
 public class EmployeeDAO implements IDAO<Employee,Integer> {
     
+    public int numberEmployeeAttendencing(){
+        String sql="SELECT COUNT(DISTINCT e.id) AS number "+
+                    "FROM EMPLOYEE e "+
+                    "JOIN ATTENDENCE a ON e.id = a.employeeId "+ 
+                    "WHERE a.timeCheckIn IS NOT NULL "+ 
+                    "AND a.timeCheckOut IS NULL;" ;
+        try{
+            Connection c = DBUltils.getConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
+            ResultSet rs= ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("number");
+               
+            }
+        }catch (Exception e){
+            System.out.println("Eror get number employee arendencing");
+        }
+        return 0;
+    }
+    
     public Employee IsValidEmployee(String username, String password){
-        String sql= "SELECT * FROM EMPLOYEE e WHERE e.userName=? and e.password = ? ";
+        String sql= "SELECT e.*,r.roleName as roleName FROM EMPLOYEE e "+
+                    "join ROLE r on e.roleId=r.id "+
+                    " WHERE e.userName=? and e.password = ? ";
+                    
         try{
             Connection c = DBUltils.getConnection();
           
             PreparedStatement ps = c.prepareStatement(sql);
+           
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs= ps.executeQuery();
             while (rs.next()) {
-                
+            
+                Role role = new Role();
+                role.setName(rs.getString("roleName"));
                 Employee emp = new Employee(
                         rs.getString("id"),
                         rs.getString("name"),
@@ -43,7 +70,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                         rs.getDate("birthday").toLocalDate(),
                         rs.getString("userName"),
                         rs.getString("password"),
-                        rs.getInt("roleId"));
+                        role);
                         
                 return emp;
             }
@@ -67,7 +94,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
             ps.setDate(5, Date.valueOf(entity.getDate()));
             ps.setString(6, entity.getUserName());
             ps.setString(7, entity.getPassword());
-            ps.setInt(8, entity.getRoleId());
+            ps.setInt(8, entity.getRole().getId());
             ps.executeUpdate();
             return entity;
         } catch (ClassNotFoundException ex) {
@@ -81,12 +108,16 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
     @Override
      public List<Employee> findAll() {
         List<Employee> employee = new ArrayList<>();
-        String sql = "SELECT * FROM EMPLOYEE";
+        String sql = "SELECT e.*,r.roleName FROM EMPLOYEE e "+
+                    "join ROLE r on e.roleId=r.id";
          try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                Role role = new Role();
+                role.setName(rs.getString("roleName"));
+               
                 Employee emp = new Employee(
                         rs.getString("id"),
                         rs.getString("name"),
@@ -95,7 +126,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                         rs.getDate("birthday").toLocalDate(),
                         rs.getString("userName"),
                         rs.getString("password"),
-                        rs.getInt("roleId"));
+                        role);
                 employee.add(emp);
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -107,23 +138,28 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
 
     @Override
     public Employee findByID(Integer id) {
-        String sql = "SELECT * FROM EMPLOYEE WHERE id = ?";
+        String sql = "SELECT e.*,r.roleName FROM EMPLOYEE e "+
+                    "join ROLE r on e.roleId=r.id "+
+                    " WHERE e.id = ?";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-             if (rs.next()) {
-                return new Employee(
-                            rs.getString("id"),
-                            rs.getString("name"),
-                            rs.getString("phone"),
-                            rs.getString("email"),
-                            rs.getDate("birthday").toLocalDate(),
-                            rs.getString("userName"),
-                            rs.getString("password"),
-                            rs.getInt("roleId")
-                );
+             while (rs.next()) {
+                Role role = new Role();
+                role.setName(rs.getString("roleName"));
+                Employee emp = new Employee(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("email"),
+                        rs.getDate("birthday").toLocalDate(),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        role);
+                        
+                return emp;              
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,7 +187,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
             ps.setDate(4, Date.valueOf(entity.getDate()));
             ps.setString(5, entity.getUserName());
             ps.setString(6, entity.getPassword());
-            ps.setInt(7, entity.getRoleId());
+            ps.setInt(7, entity.getRole().getId());
             ps.setString(8, entity.getId());
             int n = ps.executeUpdate();
             return n > 0;

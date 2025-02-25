@@ -20,12 +20,12 @@ public class Employee {
     private LocalDate Date;
     private String userName;
     private String password;
-    private int roleId;
+    private Role role;
 
     public Employee() {
     }
 
-    public Employee(String id, String name, String phone, String email, LocalDate Date, String userName, String password, int roleId) {
+    public Employee(String id, String name, String phone, String email, LocalDate Date, String userName, String password, Role role) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -33,7 +33,7 @@ public class Employee {
         this.Date = Date;
         this.userName = userName;
         this.password = password;
-        this.roleId = roleId;
+        this.role = role;
     }
 
     public String getId() {
@@ -92,13 +92,17 @@ public class Employee {
         this.password = password;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
+
+   
+
+    
     
     
 }

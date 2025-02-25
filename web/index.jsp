@@ -4,6 +4,9 @@
     Author     : ADMIN
 --%>
 
+<%@page import="dto.EmployeeDTO"%>
+<%@page import="dto.RoleDTO"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -127,6 +130,21 @@
     align-items: center;
 }
 
+        .image-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Khoảng cách giữa hai ảnh */
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    width: 50%; /* Mỗi ảnh chiếm 50% chiều rộng */
+    height: auto;; /* Chiều cao cố định */
+    object-fit: cover; /* Giữ tỉ lệ ảnh mà không bị méo */
+    border-radius: 10px; /* Bo góc ảnh */
+}
+
+
     </style>
 </head>
 <body>
@@ -155,33 +173,42 @@
         </div>
     </div>
     
+    
+    
     <div class="content">
-        <h2 class="mb-3">Chào mừng đến với hệ thống quản lý nhân sự</h2>
+        <h2 class="mb-3">Chào mừng đến với hệ thống quản lý nhân sự của Nhà Meo Coffee !!</h2>
         <p>Chọn một chức năng từ thanh điều hướng bên trái.</p>
         
         <!-- Section thông tin nhanh -->
         <div class="image-container">
-            <img src="img/470222384_122166712016327850_7637632029446358062_n_1.jpg" alt="Hình ảnh quán cà phê">
-            <img src="img/470574703_122167283666327850_553815178295824727_n.jpg" alt="Hình ảnh quán cà phê khác">
+            <img src="img/cu-1557.jpg" alt="Hình ảnh quán cà phê">
+            <img src="img/hinh-anh-quan-cheo-veo-vao-buoi-toi-6572e0c54e93d65669330692.jpg" alt="Hình ảnh quán cà phê khác">
         </div>
+        
+        <%
+            int number=(int) request.getAttribute("numberEmployeeAttendencing");
+            List<EmployeeDTO> employeeDTOs = (List<EmployeeDTO>) request.getAttribute("employeeDTOs");
+            int total= employeeDTOs.size();
+        %>
+        
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
             <div class="col mb-8">
                 <div class="stat-card">
                     <div class="icon">👨‍💼</div>
                     <h4>Số Nhân Viên</h4>
-                    <p class="number">25</p>
+                    <p class="number"><%= total %></p>
                 </div>
             </div>
             <div class="col mb-8">
                 <div class="stat-card">
                     <div class="icon">🧑‍💻</div>
                     <h4>Nhân Viên Đang Làm</h4>
-                    <p class="number">10</p>
+                    <p class="number"><%= number %></p>
                 </div>
             </div>
            
         </div>
-
+                  
         <!-- Section thông tin chi tiết -->
         <div class="mt-4">
             <h3>Danh Sách Nhân Viên</h3>
@@ -194,28 +221,23 @@
                         <th>Điện thoại</th>
                     </tr>
                 </thead>
+                
                 <tbody>
+                    <% for(EmployeeDTO e: employeeDTOs){%>
                     <tr>
-                        <td>Nguyễn Văn A</td>
-                        <td>Quản lý</td>
-                        <td>nguyenvana@gmail.com</td>
-                        <td>0901234567</td>
+                        <td><%=e.getName()%></td>
+                        <td><%=e.getRoleDTO().getName()%></td>
+                        <td><%=e.getEmail()%></td>
+                        <td><%=e.getPhone()%></td>
                     </tr>
-                    <tr>
-                        <td>Trần Thị B</td>
-                        <td>Nhân viên pha chế</td>
-                        <td>thanhtib@gmail.com</td>
-                        <td>0902345678</td>
-                    </tr>
-                    <tr>
-                        <td>Lê Minh C</td>
-                        <td>Phục vụ</td>
-                        <td>leminhc@gmail.com</td>
-                        <td>0903456789</td>
-                    </tr>
+                    <% }%>
+                    
                 </tbody>
+                
             </table>
         </div>
+        
+        
     </div>
 
     <div class="footer">
