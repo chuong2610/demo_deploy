@@ -14,15 +14,17 @@ import java.time.LocalDateTime;
 public class AttendenceDTO {
      private LocalDateTime timeCheckIn;
     private LocalDateTime timeCheckOut;
-    private int employeeId;
+    private EmployeeDTO employeeDTO;
+    private String status;
 
     public AttendenceDTO() {
     }
 
-    public AttendenceDTO(LocalDateTime timeCheckIn, LocalDateTime timeCheckOut, int employeeId) {
+    public AttendenceDTO(LocalDateTime timeCheckIn, LocalDateTime timeCheckOut, EmployeeDTO employeeDTO,String status) {
         this.timeCheckIn = timeCheckIn;
         this.timeCheckOut = timeCheckOut;
-        this.employeeId = employeeId;
+        this.employeeDTO = employeeDTO;
+        this.status=status;
     }
 
     public LocalDateTime getTimeCheckIn() {
@@ -41,13 +43,23 @@ public class AttendenceDTO {
         this.timeCheckOut = timeCheckOut;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public EmployeeDTO getEmployeeDTO() {
+        return employeeDTO;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeDTO(EmployeeDTO employeeDTO) {
+        this.employeeDTO = employeeDTO;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+   
     
     
 }

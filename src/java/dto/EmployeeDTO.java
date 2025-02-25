@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * @author ADMIN
  */
 public class EmployeeDTO {
+    private int id;
     private String name;
     private String phone;
     private String email;
@@ -21,7 +22,8 @@ public class EmployeeDTO {
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(String name, String phone, String email, LocalDate Date,RoleDTO roleDTO) {
+    public EmployeeDTO(int id,String name, String phone, String email, LocalDate Date,RoleDTO roleDTO) {
+        this.id=id;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -29,6 +31,16 @@ public class EmployeeDTO {
         this.roleDTO=roleDTO;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
+    
     public String getName() {
         return name;
     }

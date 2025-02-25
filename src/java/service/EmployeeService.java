@@ -29,7 +29,7 @@ public class EmployeeService {
         Employee e = employeeDAO.IsValidEmployee(username, password);
         RoleDTO roleDTO= new RoleDTO();
         roleDTO.setName(e.getRole().getName());
-        EmployeeDTO edto = new EmployeeDTO(e.getName(),e.getPhone(), e.getEmail(), e.getDate(), roleDTO);
+        EmployeeDTO edto = new EmployeeDTO(e.getId(),e.getName(),e.getPhone(), e.getEmail(), e.getDate(), roleDTO);
         return edto;
     }
     public List<EmployeeDTO> findAll(){
@@ -38,6 +38,7 @@ public class EmployeeService {
             EmployeeDTO eDto = new EmployeeDTO();
             RoleDTO roleDTO = new RoleDTO();
             roleDTO.setName(e.getRole().getName());
+            eDto.setId(e.getId());
             eDto.setName(e.getName());
             eDto.setEmail(e.getEmail());
             eDto.setPhone(e.getPhone());

@@ -6,7 +6,6 @@
 package controller;
 
 import dto.EmployeeDTO;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ import service.EmployeeService;
  *
  * @author ADMIN
  */
-@WebServlet(name = "indexController", urlPatterns = {"/index"})
-public class indexController extends HttpServlet {
+@WebServlet(name = "danhSachEmpyee", urlPatterns = {"/employees"})
+public class DanhSachEmpyee extends HttpServlet {
 
     EmployeeService employeeService = new EmployeeService();
 
@@ -47,13 +46,33 @@ public class indexController extends HttpServlet {
             response.sendRedirect("login");
             return;
         } else {
-            List<EmployeeDTO> employeeDTOs = new ArrayList<>();
-            employeeDTOs = employeeService.findAll();
-            int numberEmployeeAttendencing = employeeService.nuberEmployeeAttendencing();
-            request.setAttribute("employeeDTOs", employeeDTOs);
-            request.setAttribute("numberEmployeeAttendencing", numberEmployeeAttendencing);
-            System.out.println(numberEmployeeAttendencing);
-             request.getRequestDispatcher("index.jsp").forward(request, response);
+            String path = request.getServletPath();
+            switch (path) {
+                case "/employees":
+                    if (employeeDTO.getRoleDTO().getName().equals("Quản lí")) {
+                        PrintWriter out = response.getWriter();
+                        out.println("<script>alert('Bạn không có quyền truy cập!'); window.location.href='index.jsp';</script>");
+                        return;
+                    } else {
+                        List<EmployeeDTO> employeeDTOs = new ArrayList<>();
+                        employeeDTOs = employeeService.findAll();
+                        request.setAttribute("employeeDTOs", employeeDTOs);
+                        request.getRequestDispatcher("danhsachEmployee.jsp").forward(request, response);
+                    }
+                    break;
+                    
+                case "/employees_edit":
+                    
+                    
+                    break;
+                case "/employees_delete":
+                    
+                    break;
+                    
+                    
+                    
+            }
+
         }
 
     }

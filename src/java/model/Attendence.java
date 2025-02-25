@@ -16,17 +16,17 @@ public class Attendence {
     private float totalTime;
     private LocalDateTime timeCheckIn;
     private LocalDateTime timeCheckOut;
-    private int employeeId;
+    private Employee employee;
 
     public Attendence() {
     }
 
-    public Attendence(int id, float totalTime, LocalDateTime timeCheckIn, LocalDateTime timeCheckOut, int employeeId) {
+    public Attendence(int id, float totalTime, LocalDateTime timeCheckIn, LocalDateTime timeCheckOut, Employee employee) {
         this.id = id;
         this.totalTime = totalTime;
         this.timeCheckIn = timeCheckIn;
         this.timeCheckOut = timeCheckOut;
-        this.employeeId = employeeId;
+        this.employee = employee;
     }
 
     public int getId() {
@@ -61,13 +61,15 @@ public class Attendence {
         this.timeCheckOut = timeCheckOut;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
+
+    
     
     
 }

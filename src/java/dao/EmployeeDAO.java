@@ -63,7 +63,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                 Role role = new Role();
                 role.setName(rs.getString("roleName"));
                 Employee emp = new Employee(
-                        rs.getString("id"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("phoneNumber"),
                         rs.getString("email"),
@@ -87,7 +87,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, entity.getId());
+            ps.setInt(1, entity.getId());
             ps.setString(2, entity.getName());
             ps.setString(3, entity.getPhone());
             ps.setString(4, entity.getEmail());
@@ -119,7 +119,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                 role.setName(rs.getString("roleName"));
                
                 Employee emp = new Employee(
-                        rs.getString("id"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("phoneNumber"),
                         rs.getString("email"),
@@ -150,7 +150,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                 Role role = new Role();
                 role.setName(rs.getString("roleName"));
                 Employee emp = new Employee(
-                        rs.getString("id"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("phoneNumber"),
                         rs.getString("email"),
@@ -188,7 +188,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
             ps.setString(5, entity.getUserName());
             ps.setString(6, entity.getPassword());
             ps.setInt(7, entity.getRole().getId());
-            ps.setString(8, entity.getId());
+            ps.setInt(8, entity.getId());
             int n = ps.executeUpdate();
             return n > 0;
         } catch (ClassNotFoundException | SQLException ex) {

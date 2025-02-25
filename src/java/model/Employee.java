@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author ADMIN
  */
 public class Employee {
-    private String id;
+    private int id;
     private String name;
     private String phone;
     private String email;
@@ -25,7 +25,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String id, String name, String phone, String email, LocalDate Date, String userName, String password, Role role) {
+    public Employee(int id, String name, String phone, String email, LocalDate Date, String userName, String password, Role role) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -36,11 +36,11 @@ public class Employee {
         this.role = role;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
