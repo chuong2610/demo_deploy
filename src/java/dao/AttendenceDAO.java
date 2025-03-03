@@ -220,7 +220,7 @@ public class AttendenceDAO implements IDAO<Attendence, Integer> {
                 + "totalTime = ?, "
                 + "timeCheckIn = ?, "
                 + "timeCheckOut = ?,"
-                + "employeeId = ?,"
+                + "employeeId = ? "
                 + "WHERE CONVERT(DATE, timeCheckIn) = ?\n"
                 + "AND employeeId = ?;";
         try {

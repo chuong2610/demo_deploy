@@ -105,7 +105,15 @@ public class ChamCong extends HttpServlet {
 
                         if (attendeceService.findByDateAndIdEmployee(localDate, id) != null) {
                             
-
+                            if (localTimeCheckOut != null) {               
+                                if (timeCheckIn == null) {
+                                    PrintWriter out = response.getWriter();
+                                    out.println("<script>alert('Bạn chưa check in, không thể check out!'); window.location.href='index';</script>");
+                                    return;
+                                }                               
+                            }
+                            if(localTimeCheckOut!=null)
+                                adto.setTotalTime(Duration.between(localTimeCheckIn, localTimeCheckOut).toMinutes()/60);
                             boolean i = attendeceService.update(adto);
                             if (i) {
                                 PrintWriter out = response.getWriter();
