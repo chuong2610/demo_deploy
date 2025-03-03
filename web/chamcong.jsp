@@ -157,7 +157,7 @@
                         <tr>
                             <td><%= edto.getName() %></td>
                             <td><%= edto.getRoleDTO().getName()%></td>
-                            <td><a href="chamcong.html" class="btn btn-primary">Chấm Công</a></td>
+                            <td><a href="chamcongchitiet?id=<%=edto.getId()%>" class="btn btn-primary">Chấm Công</a></td>
                         </tr>
                        
                         

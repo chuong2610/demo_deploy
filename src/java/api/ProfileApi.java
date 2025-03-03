@@ -3,29 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package api;
 
-import dto.EmployeeDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import service.EmployeeService;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "danhSachEmpyee", urlPatterns = {"/employees"})
-public class DanhSachEmpyee extends HttpServlet {
-
-    EmployeeService employeeService = new EmployeeService();
+@WebServlet(name = "ProfileApi", urlPatterns = {"/profileapi"})
+public class ProfileApi extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,43 +32,7 @@ public class DanhSachEmpyee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        HttpSession session = request.getSession();
-        EmployeeDTO employeeDTO = (EmployeeDTO) session.getAttribute("employeeDTO");
-        if (employeeDTO == null) {
-            response.sendRedirect("login");
-            return;
-        } else {
-            String path = request.getServletPath();
-            switch (path) {
-                case "/employees":
-                    if (!employeeDTO.getRoleDTO().getName().equals("Quản lý")) {
-                       
-                        PrintWriter out = response.getWriter();
-                        out.println("<script>alert('Bạn không có quyền truy cập!'); window.location.href='index';</script>");
-                        
-                    } else {
-                        List<EmployeeDTO> employeeDTOs = new ArrayList<>();
-                        employeeDTOs = employeeService.findAll();
-                        request.setAttribute("employeeDTOs", employeeDTOs);
-                        request.getRequestDispatcher("danhsachEmployee.jsp").forward(request, response);
-                    }
-                    break;
-                    
-                case "/employees_edit":
-                    
-                    
-                    break;
-                case "/employees_delete":
-                    
-                    break;
-                    
-                    
-                    
-            }
-
-        }
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

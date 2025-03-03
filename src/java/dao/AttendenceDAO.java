@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,31 +27,101 @@ import ultils.DBUltils;
  *
  * @author tranm
  */
-public class AttendenceDAO implements IDAO<Attendence, Integer>{
+public class AttendenceDAO implements IDAO<Attendence, Integer> {
     
-    public List<Attendence> findTop10() {
-      List<Attendence> attendence = new ArrayList<>();
-      String sql = "SELECT a.*, e.id as employeeId, e.name as employeeName FROM ATTENDENCE a "+
-                    "join EMPLOYEE e on e.id=a.employeeId "+
-                    "order by a.timeCheckIn desc";
+    
+    
+    public Attendence findByDateAndIdEmployee(LocalDate date, int id) {
+        String sql = "SELECT a.*, e.id as employeeId, e.name as employeeName\n"
+                + "FROM ATTENDENCE a\n"
+                 + "join EMPLOYEE e on e.id=a.employeeId \n"
+                + "WHERE CONVERT(DATE, timeCheckIn) = ?\n"
+                + "AND employeeId = ?;";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs =  ps.executeQuery();
-             while (rs.next()) {
-                 Employee employee = new Employee();
-                 employee.setId(rs.getInt("employeeId"));
-                 employee.setName(rs.getString("employeeName"));
-                 Timestamp timestamp = rs.getTimestamp("timeCheckIn");
-                 LocalDateTime timeCheckInt = (timestamp != null) ? timestamp.toLocalDateTime() : null;
-                 timestamp = rs.getTimestamp("timeCheckOut");
-                 LocalDateTime timeCheckOut = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+            ps.setString(1, date.toString());
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("employeeId"));
+                employee.setName(rs.getString("employeeName"));
+                Timestamp timestamp = rs.getTimestamp("timeCheckIn");
+                LocalDateTime timeCheckIn = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+                timestamp = rs.getTimestamp("timeCheckOut");
+                LocalDateTime timeCheckOut = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+                return new Attendence(
+                        rs.getInt("id"),
+                        rs.getInt("totalTime"),
+                        timeCheckIn,
+                        timeCheckOut,
+                        employee
+                );
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public List<Attendence> findTop5ByEmployeeId(int id){
+        List<Attendence> attendence = new ArrayList<>();
+        String sql = "SELECT TOP 5 a.*, e.id as employeeId, e.name as employeeName FROM ATTENDENCE a "
+                + "join EMPLOYEE e on e.id=a.employeeId "
+                +"where e.id=? "
+                + "order by a.timeCheckIn desc";
+        try {
+            Connection conn = DBUltils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("employeeId"));
+                employee.setName(rs.getString("employeeName"));
+                Timestamp timestamp = rs.getTimestamp("timeCheckIn");
+                LocalDateTime timeCheckIn = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+                timestamp = rs.getTimestamp("timeCheckOut");
+                LocalDateTime timeCheckOut = (timestamp != null) ? timestamp.toLocalDateTime() : null;
                 Attendence att = new Attendence(
-                    rs.getInt("id"),
-                    rs.getInt("totalTime"), 
-                    timeCheckInt,
-                    timeCheckOut,
-                    employee
+                        rs.getInt("id"),
+                        rs.getInt("totalTime"),
+                        timeCheckIn,
+                        timeCheckOut,
+                        employee
+                );
+                attendence.add(att);
+            }
+        } catch (Exception e) {
+            System.out.println("Error in attendence find top 10");
+        }
+        return attendence;
+    }
+    
+    public List<Attendence> findTop10() {
+        List<Attendence> attendence = new ArrayList<>();
+        String sql = "SELECT TOP 10 a.*, e.id as employeeId, e.name as employeeName FROM ATTENDENCE a "
+                + "join EMPLOYEE e on e.id=a.employeeId "
+                + "order by a.timeCheckIn desc";
+        try {
+            Connection conn = DBUltils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("employeeId"));
+                employee.setName(rs.getString("employeeName"));
+                Timestamp timestamp = rs.getTimestamp("timeCheckIn");
+                LocalDateTime timeCheckIn = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+                timestamp = rs.getTimestamp("timeCheckOut");
+                LocalDateTime timeCheckOut = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+                Attendence att = new Attendence(
+                        rs.getInt("id"),
+                        rs.getInt("totalTime"),
+                        timeCheckIn,
+                        timeCheckOut,
+                        employee
                 );
                 attendence.add(att);
             }
@@ -61,47 +132,51 @@ public class AttendenceDAO implements IDAO<Attendence, Integer>{
     }
 
     @Override
-    public Attendence insert(Attendence entity) {
-        String sql = "INSERT INTO ATTENDNECE(id, totalTime, timeCheckIn, timeCheckOut, employeeId )" 
-                + "VALUES (?, ?, ?, ?, ?)";
+    public int insert(Attendence entity) {
+        String sql = "INSERT INTO ATTENDNECE( totalTime, timeCheckIn, timeCheckOut, employeeId )"
+                + "VALUES (?, ?, ?, ?)";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, entity.getId());
-            ps.setInt(2, (int) entity.getTotalTime());
-            ps.setObject(3, entity.getTimeCheckIn());
-            ps.setObject(4, entity.getTimeCheckOut());
-            ps.setInt(5, entity.getEmployee().getId());
-            ps.executeUpdate();
-            return entity;
+            ps.setInt(1, (int) entity.getTotalTime());
+            ps.setObject(2, entity.getTimeCheckIn() != null ? Timestamp.valueOf(entity.getTimeCheckIn()) : null);
+            ps.setObject(3, entity.getTimeCheckOut() != null ? Timestamp.valueOf(entity.getTimeCheckOut()) : null);
+            ps.setInt(4, entity.getEmployee().getId());
+            int rs = ps.executeUpdate();
+            return rs;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return entity;
+
         } catch (SQLException ex) {
             Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
-        return null;
+
         }
+        return 0;
     }
 
     @Override
     public List<Attendence> findAll() {
-      List<Attendence> attendence = new ArrayList<>();
-      String sql = "SELECT a.*, e.id as employeeId, e.name as employeeName FROM ATTENDENCE a "+
-                    "join EMPLOYEE e on e.id=a.employeeId";
+        List<Attendence> attendence = new ArrayList<>();
+        String sql = "SELECT a.*, e.id as employeeId, e.name as employeeName FROM ATTENDENCE a "
+                + "join EMPLOYEE e on e.id=a.employeeId";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs =  ps.executeQuery();
-             while (rs.next()) {
-                 Employee employee = new Employee();
-                 employee.setId(rs.getInt("employeeId"));
-                 employee.setName(rs.getString("employeeName"));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("employeeId"));
+                employee.setName(rs.getString("employeeName"));
+                Timestamp timestamp = rs.getTimestamp("timeCheckIn");
+                LocalDateTime timeCheckIn = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+                timestamp = rs.getTimestamp("timeCheckOut");
+                LocalDateTime timeCheckOut = (timestamp != null) ? timestamp.toLocalDateTime() : null;
                 Attendence att = new Attendence(
-                    rs.getInt("id"),
-                    rs.getInt("totalTime"), 
-                    rs.getObject("timeCheckIn", LocalDateTime.class), 
-                    rs.getObject("timeCheckOut", LocalDateTime.class),
-                    employee
+                        rs.getInt("id"),
+                        rs.getInt("totalTime"),
+                        timeCheckIn,
+                        timeCheckOut,
+                        employee
                 );
                 attendence.add(att);
             }
@@ -121,40 +196,42 @@ public class AttendenceDAO implements IDAO<Attendence, Integer>{
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-             while (rs.next()) {
-                 Employee employee = new Employee();
-                 employee.setId(rs.getInt("employeeId"));
-                 employee.setName(rs.getString("employeeName"));
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("employeeId"));
+                employee.setName(rs.getString("employeeName"));
                 return new Attendence(
-                    rs.getInt("id"),
-                    rs.getInt("totalTime"), 
-                    rs.getObject("timeCheckIn", LocalDateTime.class), 
-                    rs.getObject("timeCheckOut", LocalDateTime.class),
-                    employee
+                        rs.getInt("id"),
+                        rs.getInt("totalTime"),
+                        rs.getObject("timeCheckIn", LocalDateTime.class),
+                        rs.getObject("timeCheckOut", LocalDateTime.class),
+                        employee
                 );
             }
         } catch (ClassNotFoundException | SQLException ex) {
-             Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     @Override
     public boolean update(Attendence entity) {
-         String sql = "UPDATE ATTENDENCE SET "
+        String sql = "UPDATE ATTENDENCE SET "
                 + "totalTime = ?, "
                 + "timeCheckIn = ?, "
                 + "timeCheckOut = ?,"
                 + "employeeId = ?,"
-                + "WHERE id = ?";
-          try {
+                + "WHERE CONVERT(DATE, timeCheckIn) = ?\n"
+                + "AND employeeId = ?;";
+        try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, (int) entity.getTotalTime());
-            ps.setObject(2, entity.getTimeCheckIn());
-            ps.setObject(3, entity.getTimeCheckOut());
+           ps.setObject(2, entity.getTimeCheckIn() != null ? Timestamp.valueOf(entity.getTimeCheckIn()) : null);
+            ps.setObject(3, entity.getTimeCheckOut() != null ? Timestamp.valueOf(entity.getTimeCheckOut()) : null);
             ps.setInt(4, entity.getEmployee().getId());
-            ps.setInt(5, entity.getId());
+            ps.setString(5, entity.getTimeCheckIn().toLocalDate().toString());
+            ps.setInt(6, entity.getEmployee().getId());
             int n = ps.executeUpdate();
             return n > 0;
         } catch (ClassNotFoundException | SQLException ex) {
@@ -165,16 +242,31 @@ public class AttendenceDAO implements IDAO<Attendence, Integer>{
 
     @Override
     public boolean delete(Integer id) {
-         String sql = "DELETE FROM ATTENDENCE WHERE id = ?";
+        String sql = "DELETE FROM ATTENDENCE WHERE id = ?";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             int n = ps.executeUpdate();
             return n > 0;
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
-             Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+     public boolean deleteByEmployeeId(Integer id) {
+        String sql = "DELETE FROM ATTENDENCE WHERE employeeId = ?";
+        try {
+            Connection conn = DBUltils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            int n = ps.executeUpdate();
+            return n > 0;
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AttendenceDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
 

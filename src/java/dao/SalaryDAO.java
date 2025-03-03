@@ -25,7 +25,7 @@ import ultils.DBUltils;
 public class SalaryDAO implements IDAO<Salary, Integer>{
 
     @Override
-    public Salary insert(Salary entity) {
+    public int insert(Salary entity) {
         String sql = "INSERT INTO SALARY (id, totaltime, month, year, employeeId)" + "VALUES (?, ?, ?, ?, ?)";
         try {
             Connection conn = DBUltils.getConnection();
@@ -35,15 +35,16 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
             ps.setInt(3, entity.getMonth());
             ps.setInt(4, entity.getYear());
             ps.setInt(5, entity.getEmployeeId());
-            ps.executeUpdate();
-            return entity;
+            int rs=ps.executeUpdate();
+            return rs;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SalaryDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return entity;
+           
         } catch (SQLException ex) {
             Logger.getLogger(SalaryDAO.class.getName()).log(Level.SEVERE, null, ex);
-        return null;
+        
         }
+        return 0;
     }
 
     @Override
@@ -118,6 +119,22 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
     @Override
     public boolean delete(Integer id) {
         String sql = "DELETE FROM SALARY WHERE id = ?";
+         try {
+            Connection conn = DBUltils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            int n = ps.executeUpdate();
+            return n > 0;
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+             Logger.getLogger(SalaryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+    
+     public boolean deleteByEmployeeId(Integer id) {
+        String sql = "DELETE FROM SALARY WHERE employeeId = ?";
          try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);

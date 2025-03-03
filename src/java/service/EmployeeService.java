@@ -20,6 +20,29 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
  */
 public class EmployeeService {
     EmployeeDAO employeeDAO = new EmployeeDAO();
+    SalaryService salaryService = new SalaryService();
+    AttendenceService attendenceService = new AttendenceService();
+    
+    public boolean delete(int id){
+        salaryService.deleteByEmployeeId(id);
+        attendenceService.deleteByEmployeeId(id);
+        return employeeDAO.delete(id);
+    }
+    
+    public EmployeeDTO findById(int id){
+        Employee e = employeeDAO.findByID(id);
+        EmployeeDTO eDto = new EmployeeDTO();
+        RoleDTO roleDTO = new RoleDTO();
+            roleDTO.setName(e.getRole().getName());
+            eDto.setId(e.getId());
+            eDto.setName(e.getName());
+            eDto.setEmail(e.getEmail());
+            eDto.setPhone(e.getPhone());
+            eDto.setDate(e.getDate());
+            eDto.setRoleDTO(roleDTO);
+            
+            return eDto;
+    }
     
     public int nuberEmployeeAttendencing(){
         return employeeDAO.numberEmployeeAttendencing();

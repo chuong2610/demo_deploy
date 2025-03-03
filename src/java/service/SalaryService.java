@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
-
-import java.util.List;
+package service;
+    
+import dao.SalaryDAO;
 
 /**
  *
  * @author ADMIN
  */
-public interface IDAO<T,K> {
-    int insert(T entity);
-    List<T> findAll();
-    T findByID(K id);
-    boolean update(T entity);
-    boolean delete(K id);
-  
+public class SalaryService {
+    SalaryDAO salaryDAO = new SalaryDAO();
     
+    public boolean deleteByEmployeeId(int id){
+        return salaryDAO.delete(id);
+    }
 }

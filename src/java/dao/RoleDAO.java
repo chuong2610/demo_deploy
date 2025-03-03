@@ -27,7 +27,7 @@ import ultils.DBUltils;
 public class RoleDAO implements IDAO<Role,Integer> {
 
     @Override
-    public Role insert(Role entity) {
+    public int insert(Role entity) {
         String sql = "INSERT INTO ROLE (id, name, roleSalary)" + "VALUES (?, ?, ?)";
         try {
             Connection conn = DBUltils.getConnection();
@@ -35,15 +35,15 @@ public class RoleDAO implements IDAO<Role,Integer> {
             ps.setInt(1, entity.getId());
             ps.setString(2, entity.getName());
             ps.setInt(3, (int) entity.getRoleSalary());
-            ps.executeUpdate();
-            return entity;
+            int rs=ps.executeUpdate();
+            return rs;
             
         } catch (ClassNotFoundException ex ) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }  catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return 0;
     }
     @Override
     public List<Role> findAll() {

@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="dto.EmployeeDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -124,22 +125,29 @@
         <h2>Thông Tin Nhân Viên</h2>
         <div class="form-container">
             <h4>Nhập Thông Tin Chấm Công</h4>
-            <form>
+            
+            <%
+                EmployeeDTO employeeDTO=(EmployeeDTO) request.getAttribute("employeeDTO");
+            %>
+            
+            <form action="chamcongchitiet" method="post">
+                <input type="hidden" name="action" value="chamcong">
+                <input type="hidden" id="id" name="id" value="<%=employeeDTO.getId()%>">
                 <div class="mb-3">
-                    <label class="form-label">Tên Nhân Viên</label>
-                    <input type="text" class="form-control" value="Nguyễn Văn A" disabled>
+                    <label class="form-label">Tên nhân viên</label>
+                    <input type="text" class="form-control" value="<%=employeeDTO.getName()%>" disabled>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ngày Chấm Công</label>
-                    <input type="date" class="form-control">
+                    <input type="date"  id="workDate" class="form-control workDate" name="date">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Giờ Check-in</label>
-                    <input type="time" class="form-control">
+                    <input type="time" id="checkIn" class="form-control"name="timeCheckIn">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Giờ Check-out</label>
-                    <input type="time" class="form-control">
+                    <input type="time" id="checkOut" class="form-control" name="timeCheckOut">
                 </div>
                 <button type="submit" class="btn btn-primary">Xác Nhận Chấm Công</button>
             </form>
@@ -148,5 +156,6 @@
     <div class="footer">
         <p>&copy; 2025 Quán Cà Phê. All rights reserved.</p>
     </div>
+                <script src="js/attendenceApi.js"></script>
 </body>
 </html>

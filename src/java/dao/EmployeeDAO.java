@@ -81,7 +81,7 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
     }
 
     @Override
-    public Employee insert(Employee entity) {
+    public int insert(Employee entity) {
           String sql = "INSERT INTO [quanlinhansu] (id, name, phoneNumber, email, Date, userName,password, roleId) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -95,14 +95,14 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
             ps.setString(6, entity.getUserName());
             ps.setString(7, entity.getPassword());
             ps.setInt(8, entity.getRole().getId());
-            ps.executeUpdate();
-            return entity;
+            int rs=ps.executeUpdate();
+            return rs;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return null;
+         return 0;
     }
 
     @Override
