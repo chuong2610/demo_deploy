@@ -8,18 +8,19 @@
 document.getElementById("month").addEventListener("change", function() {
     let month = this.value;
     let employeeId = document.getElementById("id").value; // Lấy ID từ input hidden
+    console.log(month);
     
-    fetch(`http://localhost:8080/QuanLiNhanSu/attendencedetailapi?workDate=${workDate}&id=${employeeId}`)
+    fetch(`http://localhost:8080/QuanLiNhanSu/profileapi?month=${month}&id=${employeeId}`)
     .then(response => response.json())
     .then(data => {
-        if (data.exists== true) {
-                    console.log(data.checkIn);
-            document.getElementById("checkIn").value = data.checkIn;
-            document.getElementById("checkOut").value = data.checkOut;
+        if (data.exists === true) {
+            
+            document.getElementById("totalSalary").textContent = data.totalSalary+" VND";
+            
         } else {
                     console.log(data.exists);
-            document.getElementById("checkIn").value = "";
-            document.getElementById("checkOut").value = "";
+            document.getElementById("totalSalary").textContent = "";
+           
         }
     })
     .catch(error => console.error("Lỗi:", error));

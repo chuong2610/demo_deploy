@@ -10,17 +10,28 @@ package dto;
  * @author ADMIN
  */
 public class RoleDTO {
+    private int id;
     private String name;
     private int roleSalary;
 
     public RoleDTO() {
     }
 
-    public RoleDTO(String name, int roleSalary) {
+    public RoleDTO(int id,String name, int roleSalary) {
+        this.id=id;
         this.name = name;
         this.roleSalary = roleSalary;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     public String getName() {
         return name;
     }

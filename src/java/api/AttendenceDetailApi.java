@@ -22,7 +22,7 @@ import service.AttendenceService;
  */
 @WebServlet(name = "AttendeceDetailApi", urlPatterns = {"/attendencedetailapi"})
 public class AttendenceDetailApi extends HttpServlet {
-    AttendenceService attendeceService = new AttendenceService();
+    AttendenceService attendenceService = new AttendenceService();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +37,7 @@ public class AttendenceDetailApi extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
          LocalDate workDate = LocalDate.parse(request.getParameter("workDate")) ;
         int id = Integer.parseInt(request.getParameter("id")); 
-        AttendenceDTO adto = attendeceService.findByDateAndIdEmployee(workDate,id);
+        AttendenceDTO adto = attendenceService.findByDateAndIdEmployee(workDate,id);
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         if (adto != null) {

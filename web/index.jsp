@@ -27,60 +27,7 @@
             min-height: 100vh;
             margin: 0;
         }
-        .sidebar {
-            width: 280px;
-            height: 100vh;
-            background: #37474f;
-            color: white;
-            position: fixed;
-            padding: 30px 20px;
-        }
-        .sidebar h3 {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            margin: 8px 0;
-            transition: 0.3s;
-        }
-        .sidebar a:hover {
-            background: #546e7a;
-        }
-        .header {
-            position: fixed;
-            width: calc(100% - 280px);
-            height: 70px;
-            left: 280px;
-            background: #263238;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-        .profile {
-            display: flex;
-            align-items: center;
-        }
-
-        .profile a {
-            color: white;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-
-        .profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
+       
         .dropdown-menu {
             right: 0;
             left: auto;
@@ -89,15 +36,7 @@
             margin-left: 280px;
             padding: 90px 30px;
         }
-        .footer {
-            margin-left: 280px;
-            background: #37474f;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: auto;
-        }
-
+        
         .stat-card {
             background: white;
             border-radius: 10px;
@@ -148,30 +87,9 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h3 class="text-center">☕ Quán Cà Phê</h3>
-        <a href="danhsachnhanvien.html">📋 Quản Lý Nhân Viên</a>
-        <a href="chamcong.html">⏱ Chấm Công & Lịch Làm</a>
-        <a href="">💰 Tính Lương</a>
-        <a href="#">📊 Báo Cáo</a>
-        <a href="#">⚙️ Cài Đặt</a>
-    </div>
+    <jsp:include page="sidebar.jsp"/>
     
-    <div class="header">
-        <h4>Quản Lý Nhân Sự</h4>
-        <div class="profile dropdown">
-            <a href="#" class="dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                My Profile
-            </a>
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                <li><a class="dropdown-item" href="#">🔑 Đăng Nhập</a></li>
-                <li><a class="dropdown-item" href="#">👤 Thông Tin Tài Khoản</a></li>
-                <!-- <li><hr class="dropdown-divider"></li> -->
-                <!-- <li><a class="dropdown-item" href="#">🚪 Đăng Xuất</a></li> -->
-            </ul>
-        </div>
-    </div>
+   <jsp:include page="header.jsp"/>
     
     
     
@@ -240,9 +158,7 @@
         
     </div>
 
-    <div class="footer">
-        <p>&copy; 2025 Quán Cà Phê. All rights reserved.</p>
-    </div>
+    <%@ include file="footer.jsp" %>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     

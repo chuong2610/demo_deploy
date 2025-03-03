@@ -5,13 +5,16 @@
  */
 package api;
 
+import dto.SalaryDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.YearMonth;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SalaryService;
 
 /**
  *
@@ -19,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ProfileApi", urlPatterns = {"/profileapi"})
 public class ProfileApi extends HttpServlet {
+
+    SalaryService salaryService = new SalaryService();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +37,18 @@ public class ProfileApi extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        YearMonth month = (YearMonth) request.getAttribute("month");
+        int id = Integer.parseInt(request.getParameter("id"));
+        SalaryDTO salaryDTO = salaryService.findByMonthAndEmployeeId(month, id);
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        if (salaryDTO != null) {
+            int totalSalary = salaryDTO.getTotalSalary();
+            out.print("{ \"exists\": true, \"totalSalary\": \"" + totalSalary + "\" }");
+        } else {
+            out.print("{ \"exists\": false }");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

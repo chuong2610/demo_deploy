@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,15 +24,37 @@ import ultils.DBUltils;
  * @author ADMIN
  */
 public class SalaryDAO implements IDAO<Salary, Integer>{
+    
+    public Salary findByMonthAndEmployeeId(YearMonth month, int id){
+        String sql = "SELECT * FROM SALARY WHERE month=? and year = ? and employeeId=?";
+        try {
+            Connection conn = DBUltils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, month.getMonthValue());
+            ps.setInt(2, month.getYear());
+            ps.setInt(3, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                 rs.getInt("id");
+                 rs.getInt("totalSalary");
+                 rs.getInt("month");
+                 rs.getInt("year");
+                 rs.getInt("employeeId");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SalaryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     @Override
     public int insert(Salary entity) {
-        String sql = "INSERT INTO SALARY (id, totaltime, month, year, employeeId)" + "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SALARY (id, totalSalary, month, year, employeeId)" + "VALUES (?, ?, ?, ?, ?)";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, entity.getId());
-            ps.setInt(2, entity.getTotaltime());
+            ps.setInt(2, entity.getTotalSalary());
             ps.setInt(3, entity.getMonth());
             ps.setInt(4, entity.getYear());
             ps.setInt(5, entity.getEmployeeId());
@@ -58,7 +81,7 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
             while (rs.next()) {
                 Salary sl = new Salary(
                         rs.getInt("id"),
-                        rs.getInt("totalTime"),
+                        rs.getInt("totalSalary"),
                         rs.getInt("month"),
                         rs.getInt("year"),
                         rs.getInt("employeeId")
@@ -81,7 +104,7 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                  rs.getInt("id");
-                 rs.getInt("totalTime");
+                 rs.getInt("totalSalary");
                  rs.getInt("month");
                  rs.getInt("year");
                  rs.getInt("employeeId");
@@ -95,7 +118,7 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
     @Override
     public boolean update(Salary entity) {
       String sql = "UPDATE SALARY SET"
-                + "totalTime = ?, "
+                + "totalSalary = ?, "
                 + "month = ?, "
                 + "year = ?,"
                 + "employeeId = ?,"
@@ -103,7 +126,7 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, entity.getTotaltime());
+            ps.setInt(1, entity.getTotalSalary());
             ps.setInt(2, entity.getMonth());
             ps.setInt(3, entity.getYear());
             ps.setInt(4, entity.getEmployeeId());

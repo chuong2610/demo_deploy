@@ -56,7 +56,7 @@ public class RoleDAO implements IDAO<Role,Integer> {
             while (rs.next()) {
                 Role role = new Role(
                         rs.getInt("id"),
-                        rs.getString("name"),
+                        rs.getString("roleName"),
                         rs.getInt("roleSalary")
                 );
                 rl.add(role);

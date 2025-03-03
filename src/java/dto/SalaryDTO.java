@@ -10,7 +10,7 @@ package dto;
  * @author ADMIN
  */
 public class SalaryDTO {
-    private int totaltime;
+    private int totalSalary;
     private int month;
     private int year;
     private int employeeId;
@@ -18,19 +18,19 @@ public class SalaryDTO {
     public SalaryDTO() {
     }
 
-    public SalaryDTO(int totaltime, int month, int year, int employeeId) {
-        this.totaltime = totaltime;
+    public SalaryDTO(int totalSalary, int month, int year, int employeeId) {
+        this.totalSalary = totalSalary;
         this.month = month;
         this.year = year;
         this.employeeId = employeeId;
     }
 
-    public int getTotaltime() {
-        return totaltime;
+    public int getTotalSalary() {
+        return totalSalary;
     }
 
-    public void setTotaltime(int totaltime) {
-        this.totaltime = totaltime;
+    public void setTotalSalary(int totalSalary) {
+        this.totalSalary = totalSalary;
     }
 
     public int getMonth() {

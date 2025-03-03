@@ -39,7 +39,7 @@ public class Role {
         this.name = name;
     }
 
-    public float getRoleSalary() {
+    public int getRoleSalary() {
         return roleSalary;
     }
 

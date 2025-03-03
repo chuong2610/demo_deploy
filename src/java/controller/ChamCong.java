@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -88,7 +89,7 @@ public class ChamCong extends HttpServlet {
                         String dateStr = request.getParameter("date");
                         String timCheckInStr = request.getParameter("timeCheckIn");
                         String timeCheckOutStr = request.getParameter("timeCheckOut");
-
+                        
                         LocalDate localDate = LocalDate.parse(dateStr);
                         LocalTime localTimeCheckIn = timCheckInStr != null && !timCheckInStr.isEmpty() ? LocalTime.parse(timCheckInStr) : null;
                         LocalTime localTimeCheckOut = timeCheckOutStr != null && !timeCheckOutStr.isEmpty() ? LocalTime.parse(timeCheckOutStr) : null;

@@ -106,21 +106,9 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h3 class="text-center">☕ Nhà Meo Coffee</h3>
-        <a href="#">📋 Quản Lý Nhân Viên</a>
-        <a href="#">⏱ Chấm Công & Lịch Làm</a>
-        <a href="#">💰 Tính Lương</a>
-        <a href="#">📊 Báo Cáo</a>
-        <a href="#">⚙️ Cài Đặt</a>
-    </div>
-    <div class="header">
-        <h4>Chấm Công Chi Tiết</h4>
-        <div class="profile">
-            <a href="#">My Profile</a>
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-        </div>
-    </div>
+   <jsp:include page="sidebar.jsp"/>
+    
+   <jsp:include page="header.jsp"/>
     <div class="content">
         <h2>Thông Tin Nhân Viên</h2>
         <div class="form-container">
@@ -153,9 +141,7 @@
             </form>
         </div>
     </div>
-    <div class="footer">
-        <p>&copy; 2025 Quán Cà Phê. All rights reserved.</p>
-    </div>
-                <script src="js/attendenceApi.js"></script>
+    <%@ include file="footer.jsp" %>
+                <script src="js/attendence.js"></script>
 </body>
 </html>

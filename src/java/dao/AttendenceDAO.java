@@ -133,7 +133,7 @@ public class AttendenceDAO implements IDAO<Attendence, Integer> {
 
     @Override
     public int insert(Attendence entity) {
-        String sql = "INSERT INTO ATTENDNECE( totalTime, timeCheckIn, timeCheckOut, employeeId )"
+        String sql = "INSERT INTO ATTENDENCE( totalTime, timeCheckIn, timeCheckOut, employeeId )"
                 + "VALUES (?, ?, ?, ?)";
         try {
             Connection conn = DBUltils.getConnection();

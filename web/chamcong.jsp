@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="dto.AttendenceDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.EmployeeDTO"%>
@@ -120,22 +121,9 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h3 class="text-center">☕ Nhà Meo Coffee</h3>
-        <a href="#">📋 Quản Lý Nhân Viên</a>
-        <a href="#">⏱ Chấm Công & Lịch Làm</a>
-        <a href="#">💰 Tính Lương</a>
-        <a href="#">📊 Báo Cáo</a>
-        <a href="#">⚙️ Cài Đặt</a>
-    </div>
-
-    <div class="header">
-        <h4>Chấm Công</h4>
-        <div class="profile">
-            <a href="#">My Profile</a>
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-        </div>
-    </div>
+    <jsp:include page="sidebar.jsp"/>
+    
+   <jsp:include page="header.jsp"/>
 
     <div class="wrapper">
         <div class="content">
@@ -186,7 +174,9 @@
                             for(AttendenceDTO adto : attendenceDTOs){
                                 if(lastDay!=adto.getTimeCheckIn().getDayOfMonth()){
                                     lastDay=adto.getTimeCheckIn().getDayOfMonth();
-                                    date=adto.getTimeCheckIn().getDayOfMonth()+"/"+adto.getTimeCheckIn().getMonthValue()+"/"+adto.getTimeCheckIn().getYear();
+//                                    date=adto.getTimeCheckIn().getDayOfMonth()+"/"+adto.getTimeCheckIn().getMonthValue()+"/"+adto.getTimeCheckIn().getYear();
+                                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                    date=adto.getTimeCheckIn().toLocalDate().format(formatter);
                         %>            
                             <tr>
                                 <td colspan="5" class="table-secondary text-center fw-bold"><%=date%></td>
@@ -214,9 +204,7 @@
         </div>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2025 Quán Cà Phê. All rights reserved.</p>
-    </div>
+     <%@ include file="footer.jsp" %>
 
 </body>
 </html>

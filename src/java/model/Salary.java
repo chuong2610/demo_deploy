@@ -11,7 +11,7 @@ package model;
  */
 public class Salary {
     private int id;
-    private int totaltime;
+    private int totalSalary;
     private int month;
     private int year;
     private int employeeId;
@@ -19,9 +19,9 @@ public class Salary {
     public Salary() {
     }
 
-    public Salary(int id, int totaltime, int month, int year, int employeeId) {
+    public Salary(int id, int totalSalary, int month, int year, int employeeId) {
         this.id = id;
-        this.totaltime = totaltime;
+        this.totalSalary = totalSalary;
         this.month = month;
         this.year = year;
         this.employeeId = employeeId;
@@ -35,12 +35,12 @@ public class Salary {
         this.id = id;
     }
 
-    public int getTotaltime() {
-        return totaltime;
+    public int getTotalSalary() {
+        return totalSalary;
     }
 
-    public void setTotaltime(int totaltime) {
-        this.totaltime = totaltime;
+    public void setTotalSalary(int totaltime) {
+        this.totalSalary = totaltime;
     }
 
     public int getMonth() {

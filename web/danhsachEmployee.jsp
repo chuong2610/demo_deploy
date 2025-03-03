@@ -98,22 +98,9 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h3 class="text-center">☕ Nhà Meo Coffee</h3>
-        <a href="#">📋 Quản Lý Nhân Viên</a>
-        <a href="#">⏱ Chấm Công & Lịch Làm</a>
-        <a href="#">💰 Tính Lương</a>
-        <a href="#">📊 Báo Cáo</a>
-        <a href="#">⚙️ Cài Đặt</a>
-    </div>
+    <jsp:include page="sidebar.jsp"/>
     
-    <div class="header">
-        <h4>Danh Sách Nhân Viên</h4>
-        <div class="profile">
-            <a href="#">My Profile</a>
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-        </div>
-    </div>
+   <jsp:include page="header.jsp"/>
     
     <div class="content">
         <h2 class="mb-3">Danh sách nhân viên</h2>
@@ -135,14 +122,14 @@
                      for(EmployeeDTO e : employeeDTOs){
                 %>
                 <tr>
-                    <td><a href="chi-tiet-nhan-vien.html?id=1" style="text-decoration: none; color: black;"><%= e.getName() %></a></td>
+                    <td><a href="profile?id=<%=e.getId()%>" style="text-decoration: none; color: black;"><%= e.getName() %></a></td>
                     <td><%= e.getRoleDTO().getName() %></td>
                     <td><%= e.getEmail() %></td>
                     <td><%= e.getPhone()%></td>
                     <td>
-                        <a href="chi-tiet-nhan-vien.html?id=1" class="btn btn-info btn-sm">Chi tiết</a>
-                        <a href="#" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="#" class="btn btn-danger btn-sm">Xóa</a>
+                        <a href="profile?id=<%=e.getId()%>" class="btn btn-info btn-sm">Chi tiết</a>
+                        <a href="register?id=<%=e.getId()%>" class="btn btn-warning btn-sm">Sửa</a>
+                        <a href="employees_delete?id=<%=e.getId()%>" class="btn btn-danger btn-sm">Xóa</a>
                     </td>
                 </tr>
                 <% } %>
@@ -151,9 +138,7 @@
         </table>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2025 Quán Cà Phê. All rights reserved.</p>
-    </div>
+   <%@ include file="footer.jsp" %>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
