@@ -70,7 +70,8 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                         rs.getDate("birthday").toLocalDate(),
                         rs.getString("userName"),
                         rs.getString("password"),
-                        role);
+                        role,
+                        rs.getString("img"));
                         
                 return emp;
             }
@@ -82,19 +83,19 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
 
     @Override
     public int insert(Employee entity) {
-          String sql = "INSERT INTO [quanlinhansu] (id, name, phoneNumber, email, Date, userName,password, roleId) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+          String sql = "INSERT INTO EMPLOYEE ( name, phoneNumber, email, birthday, userName,password, roleId , img) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, entity.getId());
-            ps.setString(2, entity.getName());
-            ps.setString(3, entity.getPhone());
-            ps.setString(4, entity.getEmail());
-            ps.setDate(5, Date.valueOf(entity.getDate()));
-            ps.setString(6, entity.getUserName());
-            ps.setString(7, entity.getPassword());
-            ps.setInt(8, entity.getRole().getId());
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getPhone());
+            ps.setString(3, entity.getEmail());
+            ps.setDate(4, Date.valueOf(entity.getDate()));
+            ps.setString(5, entity.getUserName());
+            ps.setString(6, entity.getPassword());
+            ps.setInt(7, entity.getRole().getId());
+            ps.setString(8, entity.getImg());
             int rs=ps.executeUpdate();
             return rs;
         } catch (ClassNotFoundException ex) {
@@ -126,7 +127,8 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                         rs.getDate("birthday").toLocalDate(),
                         rs.getString("userName"),
                         rs.getString("password"),
-                        role);
+                        role,
+                        rs.getString("img"));
                 employee.add(emp);
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -157,7 +159,8 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
                         rs.getDate("birthday").toLocalDate(),
                         rs.getString("userName"),
                         rs.getString("password"),
-                        role);
+                         role,
+                        rs.getString("img"));
                         
                 return emp;              
             }
@@ -172,11 +175,12 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
          String sql = "UPDATE EMPLOYEE SET "
                 + "name = ?, "
                 + "phoneNumber = ?, "
-                + "email = ?,"
-                + "birthday = ?,"
-                + "userName= ?,"
-                + "password=?,"
+                + "email = ?, "
+                + "birthday = ?, "
+                + "userName= ?, "
+                + "password=?, "
                 + "roleId= ?,"
+                 + "img=?  "
                 + "WHERE id = ?";
         try {
             Connection conn = DBUltils.getConnection();
@@ -188,7 +192,8 @@ public class EmployeeDAO implements IDAO<Employee,Integer> {
             ps.setString(5, entity.getUserName());
             ps.setString(6, entity.getPassword());
             ps.setInt(7, entity.getRole().getId());
-            ps.setInt(8, entity.getId());
+            ps.setString(8, entity.getImg());
+            ps.setInt(9, entity.getId());
             int n = ps.executeUpdate();
             return n > 0;
         } catch (ClassNotFoundException | SQLException ex) {

@@ -25,6 +25,8 @@ import ultils.DBUltils;
  */
 public class SalaryDAO implements IDAO<Salary, Integer>{
     
+    
+    
     public Salary findByMonthAndEmployeeId(YearMonth month, int id){
         String sql = "SELECT * FROM SALARY WHERE month=? and year = ? and employeeId=?";
         try {
@@ -34,13 +36,20 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
             ps.setInt(2, month.getYear());
             ps.setInt(3, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                 rs.getInt("id");
-                 rs.getInt("totalSalary");
-                 rs.getInt("month");
-                 rs.getInt("year");
-                 rs.getInt("employeeId");
+            Salary s= new Salary();
+            while(rs.next()){
+                 Employee e = new Employee();
+                e.setId(rs.getInt("employeeId"));
+                e.setName(rs.getString("employeeName"));
+                Salary sl = new Salary(
+                        rs.getInt("id"),
+                        rs.getInt("totalSalary"),
+                        rs.getInt("month"),
+                        rs.getInt("year"),
+                        e
+                );
             }
+            return s;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(SalaryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,15 +58,14 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
 
     @Override
     public int insert(Salary entity) {
-        String sql = "INSERT INTO SALARY (id, totalSalary, month, year, employeeId)" + "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SALARY ( totalSalary, month, year, employeeId)" + "VALUES ( ?, ?, ?, ?)";
         try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, entity.getId());
-            ps.setInt(2, entity.getTotalSalary());
-            ps.setInt(3, entity.getMonth());
-            ps.setInt(4, entity.getYear());
-            ps.setInt(5, entity.getEmployeeId());
+            ps.setInt(1, entity.getTotalSalary());
+            ps.setInt(2, entity.getMonth());
+            ps.setInt(3, entity.getYear());
+            ps.setInt(4, entity.getEmployee().getId());
             int rs=ps.executeUpdate();
             return rs;
         } catch (ClassNotFoundException ex) {
@@ -72,26 +80,32 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
 
     @Override
     public List<Salary> findAll() {
-      List<Salary> salary = new ArrayList<>();
-      String sql = "SELECT * FROM SALARY";
+      List<Salary> salarys = new ArrayList<>();
+      String sql = "SELECT  s.*, e.id as employeeId, e.name as employeeName FROM SALARY s "
+                + "join EMPLOYEE e on e.id=s.employeeId "
+                + "ORDER BY year DESC, month DESC";
+            
       try {
             Connection conn = DBUltils.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                Employee e = new Employee();
+                e.setId(rs.getInt("employeeId"));
+                e.setName(rs.getString("employeeName"));
                 Salary sl = new Salary(
                         rs.getInt("id"),
                         rs.getInt("totalSalary"),
                         rs.getInt("month"),
                         rs.getInt("year"),
-                        rs.getInt("employeeId")
+                        e
                 );
-                salary.add(sl);
+                salarys.add(sl);
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(SalaryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return salary;
+         return salarys;
     }
 
     @Override
@@ -129,7 +143,7 @@ public class SalaryDAO implements IDAO<Salary, Integer>{
             ps.setInt(1, entity.getTotalSalary());
             ps.setInt(2, entity.getMonth());
             ps.setInt(3, entity.getYear());
-            ps.setInt(4, entity.getEmployeeId());
+            ps.setInt(4, entity.getEmployee().getId());
             ps.setInt(5, entity.getId());
              int n = ps.executeUpdate();
             return n > 0;

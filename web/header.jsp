@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="dto.EmployeeDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,14 +17,14 @@
             * {
                 box-sizing: border-box;
             }
-             body {
-            font-family: 'Poppins', sans-serif;
-            background: #eceff1;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: #eceff1;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                margin: 0;
+            }
 
             .header {
                 position: fixed;
@@ -58,11 +59,18 @@
             </style>
         </head>
         <body>
+            <%
+
+                EmployeeDTO e = (EmployeeDTO) request.getSession().getAttribute("employeeDTO");
+            %>
             <header class="header">
                 <h4>Danh Sách Nhân Viên</h4>
                 <div class="profile">
-                    <a href="#">My Profile</a>
-                    <img src="https://via.placeholder.com/40" alt="Profile Picture">
+                    <a href="profile?id=<%=e.getId()%>">My Profile</a>
+                    <img src="uploads/<%=e.getImg()%>" alt="Profile Picture">
+                    <form action="logout" method="get" class="ms-3">
+                        <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                    </form>
                 </div>
             </header>
 

@@ -6,25 +6,25 @@
 package controller;
 
 import dto.EmployeeDTO;
+import dto.SalaryDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Employee;
-import service.EmployeeService;
+import service.SalaryService;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
-
-    private EmployeeService employeeService = new EmployeeService();
+@WebServlet(name = "SalaryController", urlPatterns = {"/salary"})
+public class SalaryController extends HttpServlet {
+    SalaryService salaryService = new SalaryService();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,36 +38,22 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = null;
-        try {
-            String action = request.getParameter("action");
+         HttpSession session = request.getSession();
+        EmployeeDTO employeeDTO = (EmployeeDTO) session.getAttribute("employeeDTO");
+        if (employeeDTO == null) {
+            response.sendRedirect("login");
+            return;
+        } else {
+            if (!employeeDTO.getRoleDTO().getName().equals("Quản lý")) {
 
-            if (action == null) {
-                url = "login.jsp";
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('Bạn không có quyền truy cập!'); window.location.href='index';</script>");
             } else {
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-
-                EmployeeDTO employeeDTO = employeeService.IsValidEmployee(username, password);
-                System.out.println(employeeDTO.getImg());
-                if (employeeDTO != null) {
-                      HttpSession session = request.getSession();
-                      session.setAttribute("employeeDTO", employeeDTO); 
-                      session.setMaxInactiveInterval(5 * 60);
-                    response.sendRedirect("http://localhost:8080/QuanLiNhanSu/index");
-                    return;
-                } else {
-                    request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
-                    url = "login.jsp";
-                }
-                
+                List<SalaryDTO> salaryDTOs= salaryService.findAll();
+                request.setAttribute("salaryDTOs", salaryDTOs);
+                request.getRequestDispatcher("salary.jsp").forward(request, response);
             }
-        } catch (Exception e) {
-            System.out.println("Error at loginController");
-        }           
-            request.getRequestDispatcher(url).forward(request, response);
-        
-
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

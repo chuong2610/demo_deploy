@@ -37,7 +37,7 @@ public class ProfileApi extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        YearMonth month = (YearMonth) request.getAttribute("month");
+        YearMonth month = YearMonth.parse(request.getParameter("month")) ;
         int id = Integer.parseInt(request.getParameter("id"));
         SalaryDTO salaryDTO = salaryService.findByMonthAndEmployeeId(month, id);
         response.setContentType("application/json");

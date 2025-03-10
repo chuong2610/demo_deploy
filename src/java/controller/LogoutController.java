@@ -5,7 +5,6 @@
  */
 package controller;
 
-import dto.EmployeeDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,17 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Employee;
-import service.EmployeeService;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
-
-    private EmployeeService employeeService = new EmployeeService();
+@WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,36 +33,9 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = null;
-        try {
-            String action = request.getParameter("action");
-
-            if (action == null) {
-                url = "login.jsp";
-            } else {
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-
-                EmployeeDTO employeeDTO = employeeService.IsValidEmployee(username, password);
-                System.out.println(employeeDTO.getImg());
-                if (employeeDTO != null) {
-                      HttpSession session = request.getSession();
-                      session.setAttribute("employeeDTO", employeeDTO); 
-                      session.setMaxInactiveInterval(5 * 60);
-                    response.sendRedirect("http://localhost:8080/QuanLiNhanSu/index");
-                    return;
-                } else {
-                    request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
-                    url = "login.jsp";
-                }
-                
-            }
-        } catch (Exception e) {
-            System.out.println("Error at loginController");
-        }           
-            request.getRequestDispatcher(url).forward(request, response);
-        
-
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("login");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

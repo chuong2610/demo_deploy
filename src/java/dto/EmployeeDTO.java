@@ -18,17 +18,19 @@ public class EmployeeDTO {
     private String email;
     private LocalDate Date;
     private RoleDTO roleDTO;
+    private String img;
      
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(int id,String name, String phone, String email, LocalDate Date,RoleDTO roleDTO) {
+    public EmployeeDTO(int id,String name, String phone, String email, LocalDate Date,RoleDTO roleDTO, String img) {
         this.id=id;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.Date = Date;
         this.roleDTO=roleDTO;
+        this.img=img;
     }
 
     public int getId() {
@@ -81,8 +83,16 @@ public class EmployeeDTO {
         this.roleDTO = roleDTO;
     }
 
-   
+    public String getImg() {
+        return img;
+    }
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+   
+    
    
     
     

@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="dto.SalaryDTO"%>
 <%@page import="dto.EmployeeDTO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -102,10 +103,11 @@
 
         <jsp:include page="header.jsp"/>
 
+
+
         <div class="content">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2>Danh sách nhân viên</h2>
-                <a href="register" class="btn btn-success">Thêm nhân viên</a>
+                <h2>Lương nhân viên</h2>
             </div>
 
             <!-- Section danh sách nhân viên -->
@@ -116,26 +118,37 @@
                         <th>Vị trí</th>
                         <th>Email</th>
                         <th>Điện thoại</th>
-                        <th>Hành động</th>
+                        <th>Tổng lương</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        List<EmployeeDTO> employeeDTOs = (List<EmployeeDTO>) request.getAttribute("employeeDTOs");
-                        for (EmployeeDTO e : employeeDTOs) {
+                        List<SalaryDTO> sdtos = (List<SalaryDTO>) request.getAttribute("salaryDTOs");
+                        int lastMonth = 0;
+                        String date = null;
+
+                        for (SalaryDTO s : sdtos) {
+                            if (lastMonth != s.getMonth()) {
+                                lastMonth = s.getMonth();
+                                date = s.getMonth() + "/" + s.getYear();
+
                     %>
                     <tr>
-                        <td><a href="profile?id=<%=e.getId()%>" style="text-decoration: none; color: black;"><%= e.getName()%></a></td>
-                        <td><%= e.getRoleDTO().getName()%></td>
-                        <td><%= e.getEmail()%></td>
-                        <td><%= e.getPhone()%></td>
-                        <td>
-                            <a href="profile?id=<%=e.getId()%>" class="btn btn-info btn-sm">Chi tiết</a>
-                            <a href="register?id=<%=e.getId()%>" class="btn btn-warning btn-sm">Sửa</a>
-                            <a href="employees_delete?id=<%=e.getId()%>" class="btn btn-danger btn-sm">Xóa</a>
-                        </td>
+                        <td colspan="5" class="table-secondary text-center fw-bold"><%=date%></td>
                     </tr>
-                    <% }%>
+                    <%
+                        }
+
+                    %>
+                    <tr>
+                        <td><a href="profile?id=<%=s.getEmployeeDTO().getId()%>" style="text-decoration: none; color: black;"><%= s.getEmployeeDTO().getName()%></a></td>
+                        <td><%= s.getEmployeeDTO().getRoleDTO().getName()%></td>
+                        <td><%= s.getEmployeeDTO().getEmail()%></td>
+                        <td><%= s.getEmployeeDTO().getPhone()%></td>
+                        <td><%= s.getTotalSalary()%></td>
+                    </tr>
+                    <%
+                        }%>
 
                 </tbody>
             </table>

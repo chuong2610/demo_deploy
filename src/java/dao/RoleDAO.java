@@ -78,7 +78,7 @@ public class RoleDAO implements IDAO<Role,Integer> {
              if (rs.next()) {
                  return new Role(
                             rs.getInt("id"),
-                            rs.getString("name"),
+                            rs.getString("roleName"),
                             rs.getInt("roleSalary")
                     );
             }

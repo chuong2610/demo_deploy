@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/salary.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dao/AttendenceDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/service/SalaryService.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/controller/LoginController.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/controller/SalaryController.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/api/ProfileApi.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/controller/LogoutController.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/img/cu-1557.jpg</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/model/Salary.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dto/EmployeeDTO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/model/Role.java</file>
@@ -15,10 +19,10 @@
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/js/attendence.js</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/model/Employee.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/controller/IndexController.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dao/IDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/js/profile.js</file>
-            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/service/EmployeeService.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dao/IDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/register.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/service/EmployeeService.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/chamcongChitiet.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dto/AttendenceDTO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/controller/RegisterController.java</file>
@@ -26,14 +30,19 @@
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/index.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dao/EmployeeDAO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/model/Attendence.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/ultils/DBUltils.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/profile.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/api/AttendenceDetailApi.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/header.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/danhsachEmployee.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/controller/ChamCong.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/footer.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dao/RoleDAO.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/scheduler/SalarySchedule.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/sidebar.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/login.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/service/AttendenceService.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/service/RoleService.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dto/RoleDTO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/src/java/dto/SalaryDTO.java</file>
             <file>file:/C:/Users/ADMIN/Documents/GitHub/PRJ301/QuanLiNhanSu/web/chamcong.jsp</file>

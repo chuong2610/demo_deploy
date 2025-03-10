@@ -14,17 +14,17 @@ public class Salary {
     private int totalSalary;
     private int month;
     private int year;
-    private int employeeId;
+    private Employee employee;
 
     public Salary() {
     }
 
-    public Salary(int id, int totalSalary, int month, int year, int employeeId) {
+    public Salary(int id, int totalSalary, int month, int year, Employee employee) {
         this.id = id;
         this.totalSalary = totalSalary;
         this.month = month;
         this.year = year;
-        this.employeeId = employeeId;
+        this.employee = employee;
     }
 
     public int getId() {
@@ -39,8 +39,8 @@ public class Salary {
         return totalSalary;
     }
 
-    public void setTotalSalary(int totaltime) {
-        this.totalSalary = totaltime;
+    public void setTotalSalary(int totalSalary) {
+        this.totalSalary = totalSalary;
     }
 
     public int getMonth() {
@@ -59,12 +59,12 @@ public class Salary {
         this.year = year;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
     
     

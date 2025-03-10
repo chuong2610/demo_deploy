@@ -14,7 +14,7 @@ document.getElementById("month").addEventListener("change", function() {
     .then(response => response.json())
     .then(data => {
         if (data.exists === true) {
-            
+                    console.log(data.totalSalary);
             document.getElementById("totalSalary").textContent = data.totalSalary+" VND";
             
         } else {

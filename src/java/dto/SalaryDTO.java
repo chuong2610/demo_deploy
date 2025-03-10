@@ -5,6 +5,8 @@
  */
 package dto;
 
+import model.Employee;
+
 /**
  *
  * @author ADMIN
@@ -13,16 +15,16 @@ public class SalaryDTO {
     private int totalSalary;
     private int month;
     private int year;
-    private int employeeId;
+    private EmployeeDTO employeeDTO;
 
     public SalaryDTO() {
     }
 
-    public SalaryDTO(int totalSalary, int month, int year, int employeeId) {
+    public SalaryDTO(int totalSalary, int month, int year, EmployeeDTO employeeDTO) {
         this.totalSalary = totalSalary;
         this.month = month;
         this.year = year;
-        this.employeeId = employeeId;
+        this.employeeDTO = employeeDTO;
     }
 
     public int getTotalSalary() {
@@ -49,12 +51,12 @@ public class SalaryDTO {
         this.year = year;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public EmployeeDTO getEmployeeDTO() {
+        return employeeDTO;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeDTO(EmployeeDTO employeeDTO) {
+        this.employeeDTO = employeeDTO;
     }
     
     

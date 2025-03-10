@@ -20,10 +20,11 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
  */
 public class EmployeeService {
     EmployeeDAO employeeDAO = new EmployeeDAO();
-    SalaryService salaryService = new SalaryService();
+    
     AttendenceService attendenceService = new AttendenceService();
     
     public boolean delete(int id){
+        SalaryService salaryService = new SalaryService();
         salaryService.deleteByEmployeeId(id);
         attendenceService.deleteByEmployeeId(id);
         return employeeDAO.delete(id);
@@ -40,7 +41,7 @@ public class EmployeeService {
             eDto.setPhone(e.getPhone());
             eDto.setDate(e.getDate());
             eDto.setRoleDTO(roleDTO);
-            
+            eDto.setImg(e.getImg());
             return eDto;
     }
     
@@ -52,7 +53,7 @@ public class EmployeeService {
         Employee e = employeeDAO.IsValidEmployee(username, password);
         RoleDTO roleDTO= new RoleDTO();
         roleDTO.setName(e.getRole().getName());
-        EmployeeDTO edto = new EmployeeDTO(e.getId(),e.getName(),e.getPhone(), e.getEmail(), e.getDate(), roleDTO);
+        EmployeeDTO edto = new EmployeeDTO(e.getId(),e.getName(),e.getPhone(), e.getEmail(), e.getDate(), roleDTO,e.getImg());
         return edto;
     }
     public List<EmployeeDTO> findAll(){
@@ -67,6 +68,7 @@ public class EmployeeService {
             eDto.setPhone(e.getPhone());
             eDto.setDate(e.getDate());
             eDto.setRoleDTO(roleDTO);
+            eDto.setImg(e.getImg());
             employeeDTOs.add(eDto);
         }
         return employeeDTOs;

@@ -60,7 +60,7 @@
         <h3 class="text-center">☕ Nhà Meo Coffee</h3>
         <a href="employees">📋 Quản Lý Nhân Viên</a>
         <a href="chamcong">⏱ Chấm Công & Lịch Làm</a>
-        <a href="#">💰 Tính Lương</a>
+        <a href="salary">💰 Tính Lương</a>
         <a href="#">📊 Báo Cáo</a>
         <a href="#">⚙️ Cài Đặt</a>
     </div>

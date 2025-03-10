@@ -132,7 +132,7 @@
         <div class="content">
             <h2 class="mb-3">Thông Tin Cá Nhân</h2>
             <div class="profile-container">
-                <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                <img src="uploads/<%=edto.getImg()%>" alt="Profile Picture">
                 <div>
                     <p><strong>Tên:</strong> <%=edto.getName()%></p>
                     <p><strong>Email:</strong> <%=edto.getEmail()%></p>
@@ -174,10 +174,11 @@
             </div>
         </div>
          <%@ include file="footer.jsp" %>
-        <script>
+<!--        <script>
             document.getElementById('months').addEventListener('change', function () {
                 document.getElementById('salary').textContent = '1,200,000 VND';
             });
-        </script>
+        </script>-->
+<script src="js/profile.js"></script>
     </body>
 </html>

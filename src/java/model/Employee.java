@@ -21,11 +21,12 @@ public class Employee {
     private String userName;
     private String password;
     private Role role;
+    private String img;
 
     public Employee() {
     }
 
-    public Employee(int id, String name, String phone, String email, LocalDate Date, String userName, String password, Role role) {
+    public Employee(int id, String name, String phone, String email, LocalDate Date, String userName, String password, Role role,String img) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -34,6 +35,7 @@ public class Employee {
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.img=img;
     }
 
     public int getId() {
@@ -98,6 +100,14 @@ public class Employee {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
    
