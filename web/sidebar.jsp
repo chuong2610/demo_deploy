@@ -57,7 +57,7 @@
 </head>
 <body>
     <div class="sidebar">
-        <h3 class="text-center">☕ Nhà Meo Coffee</h3>
+        <a href="index"> <h3 class="text-center">☕ Nhà Meo Coffee</h3> </a>
         <a href="employees">📋 Quản Lý Nhân Viên</a>
         <a href="chamcong">⏱ Chấm Công & Lịch Làm</a>
         <a href="salary">💰 Tính Lương</a>

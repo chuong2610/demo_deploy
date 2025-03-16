@@ -51,6 +51,8 @@ public class EmployeeService {
     
     public EmployeeDTO IsValidEmployee(String username,String password){
         Employee e = employeeDAO.IsValidEmployee(username, password);
+        if(e==null)
+            return null;
         RoleDTO roleDTO= new RoleDTO();
         roleDTO.setName(e.getRole().getName());
         EmployeeDTO edto = new EmployeeDTO(e.getId(),e.getName(),e.getPhone(), e.getEmail(), e.getDate(), roleDTO,e.getImg());

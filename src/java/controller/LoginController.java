@@ -49,7 +49,6 @@ public class LoginController extends HttpServlet {
                 String password = request.getParameter("password");
 
                 EmployeeDTO employeeDTO = employeeService.IsValidEmployee(username, password);
-                System.out.println(employeeDTO.getImg());
                 if (employeeDTO != null) {
                       HttpSession session = request.getSession();
                       session.setAttribute("employeeDTO", employeeDTO); 

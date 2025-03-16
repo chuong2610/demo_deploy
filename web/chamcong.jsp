@@ -191,8 +191,8 @@
                         <tr>
                             <td><%=date%></td>
                             <td><%= adto.getEmployeeDTO().getName() %></td>
-                            <td><%=adto.getTimeCheckIn().getHour()%>:<%=adto.getTimeCheckIn().getMinute()%></td>
-                            <td><%=adto.getTimeCheckOut().getHour()%>:<%=adto.getTimeCheckOut().getMinute()%></td>
+                            <td><%=String.format("%02d:%02d", adto.getTimeCheckIn().getHour(), adto.getTimeCheckIn().getMinute())%></td>
+                            <td><%=String.format("%02d:%02d", adto.getTimeCheckOut().getHour(), adto.getTimeCheckOut().getMinute())%></td>
                             <td><%=adto.getStatus()%></td>
                         </tr>
                         
